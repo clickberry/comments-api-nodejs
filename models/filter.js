@@ -20,10 +20,13 @@ filterSchema.statics.isDisabled = function (relationId, callback) {
 };
 
 filterSchema.statics.change = function (relationId, ownerId, disable, callback) {
+    var Comment = this;
     if (disable) {
-        this.relationId = relationId;
-        this.ownerId = ownerId;
-        this.save(function (err) {
+        var comment = new Comment({
+            relationId: relationId,
+            ownerId: ownerId
+        });
+        comment.save(function (err) {
             if (err) {
                 return callback(err);
             }
@@ -31,7 +34,7 @@ filterSchema.statics.change = function (relationId, ownerId, disable, callback) 
             callback(null);
         });
     } else {
-        this.remove({relationId: relationId}, function (err) {
+        Comment.remove({relationId: relationId}, function (err) {
             if (err) {
                 return callback(err);
             }
@@ -39,6 +42,34 @@ filterSchema.statics.change = function (relationId, ownerId, disable, callback) 
             callback(null);
         })
     }
+};
+
+filterSchema.statics.disable = function (relationId, ownerId, callback) {
+    var Comment = this;
+
+    var comment = new Comment({
+        relationId: relationId,
+        ownerId: ownerId
+    });
+    comment.save(function (err) {
+        if (err) {
+            return callback(err);
+        }
+
+        callback(null);
+    });
+};
+
+filterSchema.statics.enable = function (relationId, ownerId, callback) {
+    var Comment = this;
+
+    Comment.remove({relationId: relationId}, function (err) {
+        if (err) {
+            return callback(err);
+        }
+
+        callback(null);
+    });
 };
 
 filterSchema.statics.get = function (relationId, callback) {

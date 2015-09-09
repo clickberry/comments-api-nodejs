@@ -17,7 +17,7 @@ module.exports = function (passport) {
     router.post('/:relationToken',
         passport.authenticate('access-token', {session: false, assignProperty: 'payload'}),
         permissions.extractPayload('relationToken'),
-        permissions.addComment,
+        permissions.checkDisable,
         function (req, res, next) {
             var comment = new Comment();
             comment.userId = req.payload.userId;
@@ -30,13 +30,20 @@ module.exports = function (passport) {
                     return next(err);
                 }
 
-                res.send(201);
+                bus.publishCreateComment(commentMapper(comment), function(err){
+                    if(err){
+                        return next(err);
+                    }
+
+                    res.sendStatus(201);
+                });
             });
         }
     );
 
     router.get('/:relationToken',
         permissions.extractPayload('relationToken'),
+        permissions.checkDisable,
         function (req, res, next) {
             Comment.find({relationId: req.relation.id}, function (err, comments) {
                 if (err) {
@@ -50,38 +57,71 @@ module.exports = function (passport) {
 
     router.put('/:commentId',
         passport.authenticate('access-token', {session: false, assignProperty: 'payload'}),
+        permissions.checkOwner('payload', 'commentId'),
         function (req, res, next) {
-            Comment.findOne({commentId: req.params.commentId}, function (err, comment) {
+            Comment.findById(req.params.commentId, function (err, comment) {
                 if (err) {
                     return next(err);
                 }
 
+                if (!comment) {
+                    return next(new Error('Not found comment.'))
+                }
+
                 comment.text = req.body.text;
-                res.send(200);
+
+                comment.save(function (err) {
+                    if (err) {
+                        return next(err);
+                    }
+
+                    res.sendStatus(200);
+                });
             });
         });
 
     router.delete('/:commentId',
         passport.authenticate('access-token', {session: false, assignProperty: 'payload'}),
+        permissions.checkOwner('payload', 'commentId'),
         function (req, res, next) {
+            req.comment.remove(function(err){
+                if(err){
+                    return next(err);
+                }
 
+                res.sendStatus(200);
+            });
         });
 
-    router.put('/:relationToken/disabled',
+    router.post('/:relationToken/disable',
         passport.authenticate('access-token', {session: false, assignProperty: 'payload'}),
         permissions.extractPayload('relationToken'),
         permissions.changePermission('payload'),
         function (req, res, next) {
-            Filter.change(req.relation.id, req.relation.ownerId, req.body.disable, function (err) {
+            Filter.disable(req.relation.id, req.relation.ownerId, function (err) {
                 if (err) {
                     return next(err);
                 }
 
-                res.send();
+                res.sendStatus(200);
             });
         });
 
-    router.get('/:relationToken/disabled',
+    router.delete('/:relationToken/disable',
+        passport.authenticate('access-token', {session: false, assignProperty: 'payload'}),
+        permissions.extractPayload('relationToken'),
+        permissions.changePermission('payload'),
+        function (req, res, next) {
+            Filter.enable(req.relation.id, req.relation.ownerId, function (err) {
+                if (err) {
+                    return next(err);
+                }
+
+                res.sendStatus(200);
+            });
+        });
+
+    router.get('/:relationToken/disable',
         permissions.extractPayload('relationToken'),
         function (req, res, next) {
             Filter.get(req.relation.id, function (err, disabled) {
@@ -98,6 +138,7 @@ module.exports = function (passport) {
         return {
             id: comment._id,
             userId: comment.userId,
+            relationId: comment.relationId,
             text: comment.text,
             created: comment.created
         };

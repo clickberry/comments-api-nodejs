@@ -1,7 +1,7 @@
 var jwt = require('jsonwebtoken');
 var config = require('../config');
 var Filter = require('../models/filter');
-
+var Comment = require('../models/comment');
 
 module.exports = function (options) {
     options = options && options.relationName || {relationName: 'relation'};
@@ -19,7 +19,7 @@ module.exports = function (options) {
         };
     };
 
-    this.addComment = function (req, res, next) {
+    this.checkDisable = function (req, res, next) {
         var relation = getRelation(req);
         Filter.isDisabled(relation.id, function (err, result) {
             if (err) {
@@ -27,7 +27,7 @@ module.exports = function (options) {
             }
 
             if (result) {
-                next(new Error('Forbidden add comment.'));
+                next(new Error('Forbidden comments.'));
             } else {
                 next();
             }
@@ -44,7 +44,31 @@ module.exports = function (options) {
                 next(new Error('Forbidden to change permissions of comments.'));
             }
         };
-    }
+    };
+
+    this.checkOwner = function (accessPayloadName, paramName) {
+        return function (req, res, next) {
+            var payload = req[accessPayloadName];
+            var commentId = req.params[paramName];
+
+            Comment.findById(commentId, function (err, comment) {
+                if (err) {
+                    return next(err);
+                }
+
+                if (!comment) {
+                    return next(new Error("Not found comment."));
+                }
+
+                if (comment.userId != payload.userId) {
+                    return next(new Error("Forbidden delete comment."));
+                }
+
+                req.comment = comment;
+                next();
+            });
+        };
+    };
 
     function getRelation(req) {
         return req[options.relationName];
