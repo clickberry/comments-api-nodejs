@@ -1,8 +1,8 @@
 {
-  "name": "clickberry-auth-api",
-  "version": "0.0.2",
+  "name": "clickberry-comments-api",
+  "version": "0.0.3",
   "main": "app.js",
-  "description": "Auth. micro-service on Node.js",
+  "description": "Comments micro-service on Node.js",
   "scripts": {
     "start": "node ./bin/www",
     "test": "mocha"
@@ -18,11 +18,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/clickberry/auth-api-nodejs"
+    "url": "https://github.com/clickberry/comments-api-nodejs"
   },
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/clickberry/auth-api-nodejs/issues"
+    "url": "https://github.com/clickberry/comments-api-nodejs/issues"
   },
   "dependencies": {
     "body-parser": "~1.12.4",
