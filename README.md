@@ -45,6 +45,7 @@ Adds comment to relation entity.
 ### Request
 #### Header
 | Param   | Value |
+|Header|
 |----------|-------------|
 | Authorization     | "JWT [accessToken]" |
 
