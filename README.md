@@ -62,12 +62,71 @@ Adds comment to relation entity.
 ## GET /{relationToken}
 Get comments for relation entity.
 
-### Request
 ### Response
 | HTTP       |      Value                                                         |
 |------------|--------------------------------------------------------------------|
 | StatusCode  | 200                                                               |
 | Body        | {id: *comment_id*, userId: *user_id*, relationId: *id_relation_entity*, text: *comment_message*, created: *created_date*} |
+
+## POST /{relationToken}/disable
+Disable comments to relation entity. Only relation entity owner.
+
+### Request
+#### Header
+| Param   | Value |
+|----------|-------------|
+| Authorization     | "JWT [accessToken]" |
+
+### Response
+| HTTP       |      Value                                                         |
+|------------|--------------------------------------------------------------------|
+| StatusCode | 201                                                                |
+
+## DELETE /{relationToken}/disable
+Enable comments to relation entity. Only relation entity owner.
+
+### Request
+#### Header
+| Param   | Value |
+|----------|-------------|
+| Authorization     | "JWT [accessToken]" |
+
+### Response
+| HTTP       |      Value                                                         |
+|------------|--------------------------------------------------------------------|
+| StatusCode | 200   |
+
+## PUT /{commentId}
+Edit comment. Only comment owner.
+
+### Request
+#### Header
+| Param   | Value |
+|----------|-------------|
+| Authorization     | "JWT [accessToken]" |
+#### Body
+| Param    | Description |
+|----------|-------------|
+| text    | Edited comment message       |
+
+### Response
+| HTTP       |      Value                                                         |
+|------------|--------------------------------------------------------------------|
+| StatusCode | 200   |
+
+## DELETE /{commentId}
+Delete comment. Only comment owner.
+
+### Request
+#### Header
+| Param   | Value |
+|----------|-------------|
+| Authorization     | "JWT [accessToken]" |
+
+### Response
+| HTTP       |      Value                                                         |
+|------------|--------------------------------------------------------------------|
+| StatusCode | 200   |
 
 # License
 Source code is under GNU GPL v3 [license](LICENSE).
