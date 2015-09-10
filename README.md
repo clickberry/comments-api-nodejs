@@ -1,5 +1,5 @@
 # Dockerized Comments API
-Comments micro-service on Node.js.
+Comments micro-service on Node.js. This micro-service for add, edit, get and manage comments for relation entity such as *video-api-clickberry*. For working it should receive [{relationToken}](#relationToken) from external micro-service.
 
 * [Architecture](#architecture)
 * [Technologies](#technologies)
@@ -10,6 +10,8 @@ Comments micro-service on Node.js.
 
 # Architecture
 The application is a REST API service with database and messaging service (Bus) dependencies.
+## {relationToken}
+{relationToken} it is json web token with info about relation entity - {id: *relation_id*, ownerId: *owner_id*}. For example? if you want add comment for video micro-service *relation_id* - video id, *owner_id* - video owner user id. In this way we connect comments-api
 
 # Technologies
 * Node.js
@@ -65,14 +67,7 @@ Get comments for relation entity.
 | HTTP       |      Value                                                         |
 |------------|--------------------------------------------------------------------|
 | StatusCode  | 200                                                               |
-| Body        | { 
-id: *comment_id*, 
-userId: *user_id*, 
-relationId: *id_relation_entity*, 
-text: *comment_message*, 
-created: *created_date*} |
-
-
+| Body        | {id: *comment_id*, userId: *user_id*, relationId: *id_relation_entity*, text: *comment_message*, created: *created_date*} |
 
 # License
 Source code is under GNU GPL v3 [license](LICENSE).
