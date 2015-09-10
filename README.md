@@ -96,6 +96,15 @@ Enable comments to relation entity. Only relation entity owner.
 |------------|--------------------------------------------------------------------|
 | StatusCode | 200   |
 
+## GET /{relationToken}/disable
+Get disable/enable state comments to relation entity.
+
+### Response
+| HTTP       |      Value                                                         |
+|------------|--------------------------------------------------------------------|
+| StatusCode | 200                                                                |
+| Body       | {disabled: *true/false*}
+
 ## PUT /{commentId}
 Edit comment. Only comment owner.
 
