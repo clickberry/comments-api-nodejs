@@ -65,7 +65,12 @@ Get comments for relation entity.
 | HTTP       |      Value                                                         |
 |------------|--------------------------------------------------------------------|
 | StatusCode  | 200                                                               |
-| Body        | { id: *comment_id*, userId: *user_id*, relationId: *id_relation_entity*, text: *comment_message*, created: *created_date*} |
+| Body        | { 
+id: *comment_id*, 
+userId: *user_id*, 
+relationId: *id_relation_entity*, 
+text: *comment_message*, 
+created: *created_date*} |
 
 
 
