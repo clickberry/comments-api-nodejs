@@ -57,5 +57,17 @@ Adds comment to relation entity.
 |------------|--------------------------------------------------------------------|
 | StatusCode | 201                                                                |
 
+## GET /{relationToken}
+Get comments for relation entity.
+
+### Request
+### Response
+| HTTP       |      Value                                                         |
+|------------|--------------------------------------------------------------------|
+| StatusCode  | 200                                                               |
+| Body        | { id: *comment_id*, userId: *user_id*, relationId: *id_relation_entity*, text: *comment_message*, created: *created_date*} |
+
+
+
 # License
 Source code is under GNU GPL v3 [license](LICENSE).
