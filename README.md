@@ -11,7 +11,7 @@ Comments micro-service on Node.js. This micro-service for add, edit, get and man
 # Architecture
 The application is a REST API service with database and messaging service (Bus) dependencies.
 ## {relationToken}
-{relationToken} it is json web token with info about relation entity - {id: *relation_id*, ownerId: *owner_id*}. For example, if you want add comment for video micro-service *relation_id* - video id, *owner_id* - video owner user id. In this way we connect comments-api to external entities.
+{relationToken} it is json web token with info about relation entity - {id: *relation_id*, ownerId: *owner_id*}. For example, if you want to add comment for video micro-service then *relation_id* - video id, *owner_id* - video owner user id. In this way we connect comments-api to external entities.
 
 # Technologies
 * Node.js
