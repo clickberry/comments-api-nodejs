@@ -36,7 +36,7 @@ The service generates events to the Bus (messaging service) in response to API r
 
 Topic | Message | Description
 :-- | :-- | :--
-create-comments | { id: *comment_id*, userId: *user_id*, relationId: *id_relation_entity*, text: *comment_message*, created: *created_date*} | User social and email registrations.
+create-comments | { id: *comment_id*, userId: *user_id*, relationId: *id_relation_entity*, text: *comment_message*, created: *created_date*} | Created new comment.
 
 # API
 ## POST /
