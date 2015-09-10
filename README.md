@@ -39,10 +39,16 @@ Topic | Message | Description
 create-comments | { id: *comment_id*, userId: *user_id*, relationId: *id_relation_entity*, text: *comment_message*, created: *created_date*} | Created new comment.
 
 # API
-## POST /
+## POST /{relationToken}
 Adds comment to relation entity.
 
 ### Request
+#### Header
+| Param   | Value |
+|----------|-------------|
+| Authorization     | "JWT [accessToken]" |
+
+#### Body
 | Param    | Description |
 |----------|-------------|
 | text    | Comment message       |
