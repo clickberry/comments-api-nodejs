@@ -27,7 +27,7 @@ Key | Value | Description
 :-- | :-- | :-- 
 MONGODB_CONNECTION | mongodb://mongo_host:mongo_port/auth | MongoDB connection string.
 TOKEN_ACCESSSECRET | MDdDRDhBOD*** | Access token secret.
-TOKEN_RELATIONSECRET | NUQzNTYwND*** | Refresh token secret.
+TOKEN_RELATIONSECRET | NUQzNTYwND*** | Relation token secret.
 NSQD_ADDRESS | bus.yourdomain.com | A hostname or an IP address of the NSQD running instance.
 NSQD_PORT | 4150 | A TCP port number of the NSQD running instance to publish events.
 
