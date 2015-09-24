@@ -25,7 +25,7 @@ The service should be properly configured with following environment variables.
 
 Key | Value | Description
 :-- | :-- | :-- 
-MONGODB_CONNECTION | mongodb://mongo_host:mongo_port/auth | MongoDB connection string.
+MONGODB_CONNECTION | mongodb://mongo_host:mongo_port/comments | MongoDB connection string.
 TOKEN_ACCESSSECRET | MDdDRDhBOD*** | Access token secret.
 TOKEN_RELATIONSECRET | NUQzNTYwND*** | Relation token secret.
 NSQD_ADDRESS | bus.yourdomain.com | A hostname or an IP address of the NSQD running instance.
