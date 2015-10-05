@@ -117,7 +117,7 @@ module.exports = function (passport) {
                     return next(err);
                 }
 
-                res.sendStatus(200);
+                res.sendStatus(201);
             });
         });
 
