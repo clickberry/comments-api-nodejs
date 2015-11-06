@@ -1,4 +1,6 @@
 var jwt = require('jsonwebtoken');
+var error = require('clickberry-http-errors');
+
 var config = require('../config');
 var Filter = require('../models/filter');
 var Comment = require('../models/comment');
@@ -27,7 +29,7 @@ module.exports = function (options) {
             }
 
             if (result) {
-                next(new Error('Forbidden comments.'));
+                next(new error.Forbidden());
             } else {
                 next();
             }
@@ -41,7 +43,7 @@ module.exports = function (options) {
             if (relation.ownerId == payload.userId) {
                 next();
             } else {
-                next(new Error('Forbidden to change permissions of comments.'));
+                next(new error.Forbidden());
             }
         };
     };
@@ -57,11 +59,11 @@ module.exports = function (options) {
                 }
 
                 if (!comment) {
-                    return next(new Error("Not found comment."));
+                    return next(new error.NotFound());
                 }
 
                 if (comment.userId != payload.userId) {
-                    return next(new Error("Forbidden delete comment."));
+                    return next(new error.Forbidden());
                 }
 
                 req.comment = comment;

@@ -1,5 +1,7 @@
 var express = require('express');
 var moment = require('moment');
+var error = require('clickberry-http-errors');
+
 var permissions = require('../middleware/permissions-mw')('relation');
 var Comment = require('../models/comment');
 var Filter = require('../models/filter');
@@ -65,7 +67,7 @@ module.exports = function (passport) {
                 }
 
                 if (!comment) {
-                    return next(new Error('Not found comment.'))
+                    return next(new error.NotFound())
                 }
 
                 comment.text = req.body.text;
