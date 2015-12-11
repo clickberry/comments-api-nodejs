@@ -1,13 +1,23 @@
 var express = require('express');
 var moment = require('moment');
 var error = require('clickberry-http-errors');
+var config = require('clickberry-config');
 
 var permissions = require('../middleware/permissions-mw')('relation');
 var Comment = require('../models/comment');
 var Filter = require('../models/filter');
 
 var Bus = require('../lib/bus-service');
-var bus = new Bus({});
+var bus = new Bus({
+    mode: config.get('node:env'),
+    address: config.get('nsqd:address'),
+    port: config.getInt('nsqd:port')
+});
+
+bus.on('reconnect_failed', function (err) {
+    console.log(err);
+    process.exit(1);
+});
 
 var router = express.Router();
 

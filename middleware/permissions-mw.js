@@ -1,7 +1,7 @@
 var jwt = require('jsonwebtoken');
 var error = require('clickberry-http-errors');
+var config = require('clickberry-config');
 
-var config = require('../config');
 var Filter = require('../models/filter');
 var Comment = require('../models/comment');
 
